@@ -40,3 +40,36 @@ console.log(
     person.friends.larry.name +
     '.',
 );
+
+console.warn(`
+  Afiseaza propozitia: “Prietenul meu Steven Stevenson are xx ani.”
+  folosind doar proprietatile
+`);
+console.log(
+  'Prietenul meu ' +
+    person.friends.steven.name +
+    ' ' +
+    person.friends.steven.surname +
+    ' are ' +
+    person.friends.steven.age +
+    ' ani.',
+);
+
+console.warn(`
+  Afiseaza propozitia:
+  “Prietenii mei sunt: Steven, Carol si Larry.
+`);
+console.log(
+  'Prietenii mei sunt: ' +
+    person.friends.steven.name +
+    ', ' +
+    person.friends.carol.name +
+    ' si ' +
+    person.friends.larry.name +
+    '.',
+);
+
+console.warn(`
+  Afiseaza numarul de caractere al numelui de familie al lui Steven
+`);
+console.log(person.friends.steven.surname.length.toString());
