@@ -36,7 +36,7 @@ console.warn(
   `Folosind obiectul person si un for, afiseaza in
   consola skillurile de pe pozitiile pare ale arrayului.`,
 );
-for (var i = 0; i < person.skills.length; i++) {
+for (let i = 0; i < person.skills.length; i++) {
   var skill = person.skills[i];
 
   if (i % 2 === 0) {
