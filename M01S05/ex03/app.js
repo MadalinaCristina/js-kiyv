@@ -20,3 +20,6 @@ console.warn(
     cati litri de bere va produce un teren de 400m pe 370m?
   `,
 );
+const beerYield = 2.5 / 10;
+const field3Yield = yield * calculateRectangleArea(400, 370);
+console.log(beerYield * field3Yield);
