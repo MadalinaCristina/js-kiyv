@@ -48,10 +48,20 @@ class Car {
 
   render() {
     document.body.append(this.frame);
+
+    return this;
   }
 
-  test() {
-    console.log('test');
+  turnLightOn() {
+    this.lightFront.classList.add('light--on');
+
+    return this;
+  }
+
+  turnLightOff() {
+    this.lightFront.classList.remove('light--on');
+
+    return this;
   }
 
   e(elementName) {
@@ -64,5 +74,4 @@ const car01 = new Car(250, 16, 'red');
 car01.render();
 const car02 = new Car(16, 250, 'blue');
 car02.render();
-const car03 = new Car(16, 16, 'teal');
-car03.render();
+const car03 = new Car(16, 16, 'teal').render().turnLightOn();
