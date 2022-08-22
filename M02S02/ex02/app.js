@@ -18,5 +18,31 @@ $(function () {
     for (const entry of formData) {
       console.log(entry);
     }
+
+    this.reset();
+
+    // wrap form in jquery
+    $(this).after(render(person));
   });
+
+  // hoisting function functions
+  function render(person) {
+    const $personDisplay = $('<div>', {
+      class: 'personDisplay',
+    }).append(renderPerson(person));
+
+    return $personDisplay;
+  }
+
+  function renderPerson(person) {
+    // destructurare
+    const { name, age, surname } = person;
+    // const name = person.name;
+    // const age = person.age;
+    // const surname = person.surname;
+
+    return $('<p>', {
+      text: `${name} ${surname}: ${age}`,
+    });
+  }
 });
