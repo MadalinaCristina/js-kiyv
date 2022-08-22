@@ -54,8 +54,39 @@ $('.navigation').append(
   }),
 );
 
-$('.navigation .nav-link').before(
-  $('<h2>', {
-    text: 'Navigatie',
+$('.navigation .nav-link')
+  .before(
+    $('<h2>', {
+      text: 'Navigatie',
+    }),
+  )
+  .prepend(
+    $('<sup>', {
+      text: 1,
+    }),
+  );
+
+$container.before(
+  $('<h1>', {
+    text: 'Invat jQuery',
   }),
 );
+
+const $docs = $('<p>', {
+  text: 'Documentatia jQuery poate fi gasita ',
+});
+$docs
+  .append(
+    $('<a>', {
+      href: 'https://api.jquery.com',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      text: 'aici',
+    }),
+  )
+  .append(
+    $('<span>', {
+      text: '.',
+    }),
+  )
+  .insertAfter($('.navigation'));
