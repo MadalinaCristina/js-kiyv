@@ -129,8 +129,16 @@ $(function () {
     })
     .on('click', '.saveSkillButton', (event) => {
       const $saveSkillButton = $(event.target);
-      const $skillLabel = $saveSkillButton.siblings('.skillLabel');
-      const $skillInput = $saveSkillButton.siblings('input[name^="skill_"]');
+      const $skillLabel = $saveSkillButton.siblings('.skillLabel').show();
+      const $skillInput = $saveSkillButton
+        .siblings('input[name^="skill_"]')
+        .attr('type', 'hidden');
+
+      $skillLabel.text($skillInput.val());
+
+      $saveSkillButton.siblings('.editSkillButton, .removeSkillButton').show();
+      $saveSkillButton.hide();
+      $saveSkillButton.siblings('.cancelEditSkillButton').hide();
     });
 
   // create skills input step
