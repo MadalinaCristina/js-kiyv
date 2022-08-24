@@ -68,6 +68,23 @@ const renderSkillsUl = (skillName) => {
   return $skillsUl;
 };
 
+const renderPetUl = (petName) => {
+  const listClass = 'petUl';
+  let ul = document.querySelector(`.${listClass}`);
+
+  if (ul === null) {
+    ul = document.createElement('ul');
+    ul.classList.add(listClass);
+  }
+
+  const petLi = document.createElement('li');
+  petLi.innerText = petName;
+
+  ul.append(petLi);
+
+  return ul;
+};
+
 $(function () {
   // form submission step
   const $form = $('#personForm').on('submit', function (event) {
@@ -134,7 +151,10 @@ $(function () {
         .siblings('input[name^="skill_"]')
         .attr('type', 'hidden');
 
-      $skillLabel.text($skillInput.val());
+      const skillName = $skillInput.val();
+
+      $skillLabel.text(skillName);
+      $skillInput.attr('name', `skill_${skillName.replaceAll(' ', '')}`);
 
       $saveSkillButton.siblings('.editSkillButton, .removeSkillButton').show();
       $saveSkillButton.hide();
@@ -176,6 +196,34 @@ $(function () {
         $skillInput.val('');
       }),
     );
+
+  // DOM version
+  // array like object
+  const petFieldset = $form[0].querySelector('fieldset:nth-child(3)');
+  const petInput = document.createElement('input');
+  petInput.placeholder = 'Pet';
+  petInput.type = 'text';
+  petInput.name = 'petInput';
+  petFieldset.append(petInput);
+  const petInputButton = document.createElement('button');
+  petInputButton.innerText = 'Add pet';
+  petInputButton.title = 'Add pet';
+  petInputButton.type = 'button';
+  petInputButton.addEventListener('click', (event) => {
+    const petInputButton = event.currentTarget;
+    const petInput = petInputButton.previousElementSibling;
+    const petName = petInput.value;
+
+    if (petName.length <= 0) {
+      return;
+    }
+
+    const ul = renderPetUl(petName);
+    petInputButton.after(ul);
+
+    petInput.value = '';
+  });
+  petFieldset.append(petInputButton);
 
   // hoisting function functions
   function render(person) {
