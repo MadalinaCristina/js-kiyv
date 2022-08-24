@@ -79,6 +79,10 @@ const renderPetUl = (petName) => {
 
   const petLi = document.createElement('li');
   petLi.innerText = petName;
+  const petInput = document.createElement('input');
+  petInput.type = 'hidden';
+  petInput.name = `pet_${petName.replaceAll(' ', '')}`;
+  petLi.append(petInput);
 
   ul.append(petLi);
 
