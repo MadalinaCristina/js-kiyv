@@ -16,9 +16,12 @@ const renderSkillsUl = (skillName) => {
     });
   }
 
-  const $skillLi = $('<li>', {
-    text: skillName,
-  });
+  const $skillLi = $('<li>').append(
+    $('<span>', {
+      text: skillName,
+      class: 'skillLabel',
+    }),
+  );
   const $skillInput = $('<input>', {
     type: 'hidden',
     value: skillName,
@@ -34,14 +37,31 @@ const renderSkillsUl = (skillName) => {
   }).appendTo($skillLi);
 
   // jq vartion
-  $skillLi.append(
-    $('<button>', {
-      title: 'Edit skill',
-      text: 'Edit',
-      type: 'button',
-      class: 'editSkillButton',
-    }),
-  );
+  $skillLi
+    .append(
+      $('<button>', {
+        title: 'Edit skill',
+        text: 'Edit',
+        type: 'button',
+        class: 'editSkillButton',
+      }),
+    )
+    .append(
+      $('<button>', {
+        title: 'Save skill',
+        text: 'Save',
+        type: 'button',
+        class: 'saveSkillButton',
+      }).hide(),
+    )
+    .append(
+      $('<button>', {
+        title: 'Cancel edit',
+        text: 'Cancel',
+        type: 'button',
+        class: 'cancelEditSkillButton',
+      }).hide(),
+    );
 
   $skillsUl.append($skillLi);
 
@@ -84,6 +104,34 @@ $(function () {
     // this -> pointer catre button
     $(this).parent().remove();
   });
+
+  $form
+    .on('click', '.editSkillButton', function () {
+      const $editSkillButton = $(this);
+
+      $editSkillButton.siblings('.removeSkillButton').hide();
+      $editSkillButton.siblings('.skillLabel').hide();
+      $editSkillButton.siblings('input[name^="skill_"]').attr('type', 'text');
+      $editSkillButton.hide();
+      $editSkillButton.siblings('.cancelEditSkillButton').show();
+      $editSkillButton.siblings('.saveSkillButton').show();
+    })
+    .on('click', '.cancelEditSkillButton', function () {
+      const $cancelEditSkillButton = $(this);
+
+      $cancelEditSkillButton.siblings('.editSkillButton').show();
+      $cancelEditSkillButton.siblings('.skillLabel').show();
+      $cancelEditSkillButton
+        .siblings('input[name^="skill_"]')
+        .attr('type', 'hidden');
+      $cancelEditSkillButton.hide();
+      $cancelEditSkillButton.siblings('.saveSkillButton').hide();
+    })
+    .on('click', '.saveSkillButton', (event) => {
+      const $saveSkillButton = $(event.target);
+      const $skillLabel = $saveSkillButton.siblings('.skillLabel');
+      const $skillInput = $saveSkillButton.siblings('input[name^="skill_"]');
+    });
 
   // create skills input step
   // form.descendentii-directi.al-doilea-fieldset
