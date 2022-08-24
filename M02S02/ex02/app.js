@@ -20,11 +20,28 @@ const renderSkillsUl = (skillName) => {
     text: skillName,
   });
   const $skillInput = $('<input>', {
-    type: 'text',
+    type: 'hidden',
     value: skillName,
     name: `skill_${skillName.replaceAll(' ', '')}`,
   });
   $skillLi.append($skillInput);
+  // jq variation
+  $('<button>', {
+    text: '-',
+    title: 'Remove skill',
+    type: 'button',
+    class: 'removeSkillButton',
+  }).appendTo($skillLi);
+
+  // jq vartion
+  $skillLi.append(
+    $('<button>', {
+      title: 'Edit skill',
+      text: 'Edit',
+      type: 'button',
+      class: 'editSkillButton',
+    }),
+  );
 
   $skillsUl.append($skillLi);
 
@@ -56,10 +73,16 @@ $(function () {
 
     this.reset();
     $('.skillsUl').remove();
+    $('.personDisplay').remove();
 
     // wrap form in jquery
     // render returneaza obiect jq si este plasat in DOM
     $(this).after(render(person));
+  });
+
+  $form.on('click', '.removeSkillButton', function () {
+    // this -> pointer catre button
+    $(this).parent().remove();
   });
 
   // create skills input step
@@ -67,7 +90,7 @@ $(function () {
   const addSkillText = 'Add skill';
   $form
     .children()
-    .eq(1)
+    .eq(1) // 0 based
     .append(
       $('<input>', {
         type: 'text',
@@ -86,6 +109,10 @@ $(function () {
         const $button = $(this);
         const $skillInput = $button.prev();
         const skillName = $skillInput.val();
+
+        if (skillName.length <= 0) {
+          return;
+        }
 
         const $ul = renderSkillsUl(skillName);
         $button.after($ul);
@@ -121,6 +148,10 @@ $(function () {
   function renderPersonSkills(person) {
     const { skills, ...restOfPerson } = person;
     const { name } = restOfPerson;
+
+    if (skills.length <= 0) {
+      return '';
+    }
 
     let message = '';
     skills.forEach(function (skill, index, skills) {
