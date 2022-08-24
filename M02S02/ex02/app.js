@@ -82,6 +82,7 @@ const renderPetUl = (petName) => {
   const petInput = document.createElement('input');
   petInput.type = 'hidden';
   petInput.name = `pet_${petName.replaceAll(' ', '')}`;
+  petInput.value = petName;
   petLi.append(petInput);
 
   ul.append(petLi);
@@ -99,6 +100,7 @@ $(function () {
     person.surname = this.surname.value;
     person.age = this.age.value;
     person.skills = person.skills || [];
+    person.pets = person.pets || [];
 
     // loop through optional data
     const formData = new FormData(this);
@@ -109,6 +111,10 @@ $(function () {
       // const inputValue = entry[1];
       if (inputName.startsWith('skill_')) {
         person.skills.push(inputValue);
+      }
+
+      if (inputName.startsWith('pet_')) {
+        person.pets.push(inputValue);
       }
     }
 
@@ -236,7 +242,8 @@ $(function () {
       class: 'personDisplay',
     })
       .append(renderPerson(person))
-      .append(renderPersonSkills(person));
+      .append(renderPersonSkills(person))
+      .append(renderPersonPets(person));
 
     return $personDisplay;
   }
@@ -277,6 +284,18 @@ $(function () {
 
     return $('<p>', {
       text: `${name}'s skills are: ${message}`,
+    });
+  }
+
+  function renderPersonPets(person) {
+    const { pets, ...restOfPerson } = person;
+
+    if (pets.length <= 0) {
+      return '';
+    }
+
+    return $('<p>', {
+      text: pets.toString(),
     });
   }
 });
