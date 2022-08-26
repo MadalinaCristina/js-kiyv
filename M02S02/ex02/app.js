@@ -84,6 +84,12 @@ const renderPetUl = (petName) => {
   petInput.name = `pet_${petName.replaceAll(' ', '')}`;
   petInput.value = petName;
   petLi.append(petInput);
+  const removePetButton = document.createElement('button');
+  removePetButton.innerText = '-';
+  removePetButton.title = 'Remove pet';
+  removePetButton.type = 'button';
+  removePetButton.className = 'removePetButton';
+  petLi.append(removePetButton);
 
   ul.append(petLi);
 
@@ -92,47 +98,85 @@ const renderPetUl = (petName) => {
 
 $(function () {
   // form submission step
-  const $form = $('#personForm').on('submit', function (event) {
-    event.preventDefault();
-    // this -> pointer to the form
-    // this.name -> pointer to the input
-    person.name = this.name.value;
-    person.surname = this.surname.value;
-    person.age = this.age.value;
-    person.skills = person.skills || [];
-    person.pets = person.pets || [];
+  const $form = $('#personForm');
 
-    // loop through optional data
-    const formData = new FormData(this);
-    for (const entry of formData) {
-      // array destructure
-      const [inputName, inputValue] = entry;
-      // const inputName = entry[0];
-      // const inputValue = entry[1];
-      if (inputName.startsWith('skill_')) {
-        person.skills.push(inputValue);
-      }
+  // DOM version, mutata inainte de form submit handler
+  // array like object
+  const petFieldset = $form[0].querySelector('fieldset:nth-child(3)');
+  const petInput = document.createElement('input');
+  petInput.placeholder = 'Pet';
+  petInput.type = 'text';
+  petInput.name = 'petInput';
+  petFieldset.append(petInput);
 
-      if (inputName.startsWith('pet_')) {
-        person.pets.push(inputValue);
-      }
-    }
+  const petInputButton = document.createElement('button');
+  petInputButton.innerText = 'Add pet';
+  petInputButton.title = 'Add pet';
+  petInputButton.type = 'button';
+  petInputButton.addEventListener('click', (event) => {
+    const petInputButton = event.currentTarget;
+    const petInput = petInputButton.previousElementSibling;
+    const petName = petInput.value;
 
-    this.reset();
-    $('.skillsUl').remove();
-    $('.personDisplay').remove();
+    // refactorizam event listener ca sa poata fi folosit
+    // si pe input + enter
+    petInputButton.after(createPetPreview(petName));
 
-    // wrap form in jquery
-    // render returneaza obiect jq si este plasat in DOM
-    $(this).after(render(person));
+    petInput.value = '';
   });
-
-  $form.on('click', '.removeSkillButton', function () {
-    // this -> pointer catre button
-    $(this).parent().remove();
-  });
+  petFieldset.append(petInputButton);
 
   $form
+    .on('submit', function (event) {
+      event.preventDefault();
+      const petInput = this.petInput;
+      const petName = petInput.value;
+
+      if (petName.trim().length > 0) {
+        const petInputButton = petInput.nextElementSibling;
+        petInputButton.after(createPetPreview(petName));
+
+        petInput.value = '';
+
+        return;
+      }
+
+      // this -> pointer to the form
+      // this.name -> pointer to the input
+      person.name = this.name.value;
+      person.surname = this.surname.value;
+      person.age = this.age.value;
+      person.skills = person.skills || [];
+      person.pets = person.pets || [];
+
+      // loop through optional data
+      const formData = new FormData(this);
+      for (const entry of formData) {
+        // array destructure
+        const [inputName, inputValue] = entry;
+        // const inputName = entry[0];
+        // const inputValue = entry[1];
+        if (inputName.startsWith('skill_')) {
+          person.skills.push(inputValue);
+        }
+
+        if (inputName.startsWith('pet_')) {
+          person.pets.push(inputValue);
+        }
+      }
+
+      this.reset();
+      $('.skillsUl').remove();
+      $('.personDisplay').remove();
+
+      // wrap form in jquery
+      // render returneaza obiect jq si este plasat in DOM
+      $(this).after(render(person));
+    })
+    .on('click', '.removeSkillButton', function () {
+      // this -> pointer catre button
+      $(this).parent().remove();
+    })
     .on('click', '.editSkillButton', function () {
       const $editSkillButton = $(this);
 
@@ -171,6 +215,32 @@ $(function () {
       $saveSkillButton.siblings('.cancelEditSkillButton').hide();
     });
 
+  // event delelegation, DOM style
+  // aceleasi lucru, dar pt comparatie cu API-ul jQuery
+  $form[0].addEventListener('click', (event) => {
+    // in arrow functions nu avem acces la acel obiect this
+    // in arrow functions avem this-ul conectat de this-ul din
+    // contextul de afara
+    const button = event.target;
+    // diferenta dintre event.target si .currentTarget
+    // este ca currentTarget este elementul pe care STA (form)
+    // event handlerul, iar target, este elementul de pe care
+    // evenimentul a plecat
+    if (
+      button.nodeName !== 'BUTTON' ||
+      !button.classList.contains('removePetButton')
+    ) {
+      // early return
+      // daca tipul elementului masurat de nodeName nu est button
+      // si daca nu are clasa removePetButton
+      return;
+    }
+
+    // suntem pe butonul de remove pet:
+    // nde ducem pe parinte, DOM style, si eliminam parintele
+    button.parentElement.remove();
+  });
+
   // create skills input step
   // form.descendentii-directi.al-doilea-fieldset
   const addSkillText = 'Add skill';
@@ -207,35 +277,15 @@ $(function () {
       }),
     );
 
-  // DOM version
-  // array like object
-  const petFieldset = $form[0].querySelector('fieldset:nth-child(3)');
-  const petInput = document.createElement('input');
-  petInput.placeholder = 'Pet';
-  petInput.type = 'text';
-  petInput.name = 'petInput';
-  petFieldset.append(petInput);
-  const petInputButton = document.createElement('button');
-  petInputButton.innerText = 'Add pet';
-  petInputButton.title = 'Add pet';
-  petInputButton.type = 'button';
-  petInputButton.addEventListener('click', (event) => {
-    const petInputButton = event.currentTarget;
-    const petInput = petInputButton.previousElementSibling;
-    const petName = petInput.value;
-
+  // hoisting function functions
+  function createPetPreview(petName) {
     if (petName.length <= 0) {
       return;
     }
 
-    const ul = renderPetUl(petName);
-    petInputButton.after(ul);
+    return renderPetUl(petName);
+  }
 
-    petInput.value = '';
-  });
-  petFieldset.append(petInputButton);
-
-  // hoisting function functions
   function render(person) {
     // all in memory
     const $personDisplay = $('<div>', {
