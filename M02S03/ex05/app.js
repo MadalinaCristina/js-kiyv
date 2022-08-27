@@ -21,6 +21,12 @@ const showWindowSurface = () => {
     'surfaceP',
   );
 };
+// recipe for debounce
+// o functie debounced va executa, doar dupa ce au treuct milisecundele specificate
+// dupa ce am oprit complet resizeul ferestrei, dupa 300 ms in cazul asta
+// event handlerul va fi executat
+// problema la resize, este ca event handerul ar fi executat
+// CONSTANT daca nu am fi abut debounce
 const debouncedWindowSurface = debounce(showWindowSurface, 300);
 window.addEventListener('resize', debouncedWindowSurface);
 showWindowSurface();
