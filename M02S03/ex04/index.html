@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>DOM Events - load</title>        
+  <meta charset="utf-8">
+  <title>DOM Events - load</title>
 
 </head>
-<body>
 
-  <img src="http://lorempixel.com/output/food-q-c-350-350-7.jpg" class="image">
+<body>
+  <!--
+    atributul loading cu valoarea lazy
+    previne incarcarea imaginii
+    pana cand browserul "crede" ca are nevoie
+    de ea, ceea ce inseamna ca si evenimentul
+    de load / element.onload vor fi emise
+    doar atunci
+  -->
+  <img
+    src="https://pixellab.ro/img/sliders/cursuri_react_web_development.jpg"
+    class="image"
+    loading="lazy"
+    style="margin-top: 2000px"
+  >
+  <p id="loader">Imaginea se incarca...</p>
 
   <script src="app.js"></script>
 </body>
+
 </html>
