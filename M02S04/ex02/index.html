@@ -1,22 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>CSS animation in JavaScript</title>    
-    <style>
-      .box {
-        width: 100px;
-        height: 100px; 
-        border: 1px solid #000;
-        transition: background-color 1s ease;
-      }
 
-    </style>
+<head>
+  <meta charset="utf-8" />
+  <title>CSS animation in JavaScript</title>
+  <style>
+    .box {
+      display: block;
+      width: 100px;
+      cursor: pointer;
+      height: 100px;
+      border: 1px solid #000;
+      transition: background-color 1s ease;
+    }
+
+    .box-container {
+      display: flex;
+      gap: 16px
+    }
+
+  </style>
 </head>
+
 <body>
-  
-  <div class="box"></div>
+
+  <div class="box-container">
+    <label
+      class="box"
+      for="box-1"
+    >
+      <input
+        type="radio"
+        id="box-1"
+        name="box"
+        checked
+      >
+    </label>
+
+    <label
+      class="box"
+      for="box-2"
+    >
+      <input
+        type="radio"
+        id="box-2"
+        name="box"
+      >
+    </label>
+
+    <label
+      class="box"
+      for="box-3"
+    >
+      <input
+        type="radio"
+        id="box-3"
+        name="box"
+      >
+    </label>
+  </div>
+
+  <form>
+    <button
+      type="button"
+      data-color="red"
+    >Red</button>
+    <button
+      type="button"
+      data-color="green"
+    >Green</button>
+    <button
+      type="button"
+      data-color="blue"
+    >Blue</button>
+    <br> <br>
+
+    <!-- no name, DOM traversal -->
+    <input
+      type="color"
+      class="color"
+    >
+    <button type="button">Dinamic</button>
+  </form>
 
   <script src="app.js"></script>
 </body>
+
 </html>
