@@ -1,37 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=\, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta
+    name="viewport"
+    content="width=\, initial-scale=1.0"
+  >
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="ie=edge"
+  >
   <title>Form Validation</title>
 </head>
+
 <body>
   <form id="personForm">
     <fieldset>
       <legend>Persoana</legend>
-      <label for="name">*Nume:</label>
-      <input type="text" name="name" placeholder="Nume"> 
-        
+
+      <div class="form-group">
+        <label for="name">*Nume:</label>
+        <input
+          type="text"
+          name="name"
+          minlength="5"
+          maxlength="30"
+          placeholder="Nume"
+          required
+        >
+      </div>
+
       <br><br>
 
-      <label for="surname">*Prenume:</label>
-      <input type="text" name="surname" placeholder="Prenume"> 
+      <div class="form-group">
+        <label for="surname">*Prenume:</label>
+        <input
+          type="text"
+          name="surname"
+          minlength="5"
+          maxlength="30"
+          placeholder="Prenume"
+          required
+        >
+      </div>
 
       <br><br>
 
-      <label for="age">*Email: </label>
-      <input type="email" name="email" placeholder="Email"> 
+      <div class="form-group">
+        <label for="age">*Email: </label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+        >
+      </div>
 
       <br><br>
 
-      <label for="age">*Varsta: </label>
-      <input type="text" name="age" placeholder="Varsta">    
-      
+      <div class="form-group">
+        <label for="age">*Varsta: </label>
+        <input
+          type="number"
+          name="age"
+          min="14"
+          max="99"
+          placeholder="Varsta"
+          required
+        >
+      </div>
+
       <br><br>
 
       <button type="submit">Adauga</button>
     </fieldset>
   </form>
+
+  <script src="./node_modules/pristinejs/dist/pristine.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>
