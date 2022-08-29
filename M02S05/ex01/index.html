@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge"
+  >
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <!-- Required Core Stylesheet -->
+  <link
+    rel="stylesheet"
+    href="node_modules/@glidejs/glide/dist/css/glide.core.min.css"
+  >
+
+  <!-- Optional Theme Stylesheet -->
+  <link
+    rel="stylesheet"
+    href="node_modules/@glidejs/glide/dist/css/glide.theme.min.css"
+  >
+  <title>Carousel</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .glide img {
+      width: 100%;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="glide">
+    <div
+      class="glide__track"
+      data-glide-el="track"
+    >
+      <ul class="glide__slides">
+        <li class="glide__slide">
+          <img
+            src="images/image01.jpg"
+            alt="01"
+          >
+        </li>
+
+        <li class="glide__slide">
+          <img
+            src="images/image02.jpg"
+            alt="02"
+          >
+        </li>
+
+        <li class="glide__slide">
+          <img
+            src="images/image03.jpg"
+            alt="01"
+          >
+        </li>
+
+        <li class="glide__slide">
+          <img
+            src="images/image04.jpg"
+            alt="01"
+          >
+        </li>
+
+        <li class="glide__slide">
+          <img
+            src="images/image05.jpg"
+            alt="01"
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="./node_modules/@glidejs/glide/dist/glide.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
