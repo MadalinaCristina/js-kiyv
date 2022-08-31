@@ -1,1 +1,2 @@
 HELLO NODE WORLD!
+Ş漢字
