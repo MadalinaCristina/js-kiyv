@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  getPersons().then((persons) => {
-    console.log(persons);
-    renderPersons(persons);
-  });
+  getPersons();
 
   document.getElementById('personForm').addEventListener('submit', (event) => {
     event.preventDefault();
@@ -17,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
       name,
       surname,
       id,
+    }).then(() => {
+      getPersons();
+
+      form.reset();
     });
   });
 });
@@ -27,12 +28,15 @@ function getPersons() {
       return response.json();
     })
     .then((persons) => {
+      renderPersons(persons);
+
       return persons;
     });
 }
 
 function renderPersons(persons) {
   const section = document.getElementById('personsDisplay');
+  section.innerHTML = '';
 
   persons.forEach((person) => {
     // destructuring
@@ -58,7 +62,5 @@ function postPerson(person) {
       // .json() ne da TOT un promise
       return response.json();
     })
-    .then((data) => {
-      console.log(data);
-    });
+    .then((data) => {});
 }
